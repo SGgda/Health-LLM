@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Health AI Assistant</title>
+    <script>
+        async function checkSymptom() {
+            let symptoms = document.getElementById("symptoms").value;
+            let response = await fetch("http://localhost:5000/check-symptom", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ symptoms })
+            });
+            let data = await response.json();
+            document.getElementById("result").innerText = "Diagnosis: " + data.diagnosis;
+        }
+
+        async function checkMentalHealth() {
+            let issue = document.getElementById("issue").value;
+            let response = await fetch("http://localhost:5000/mental-health", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ issue })
+            });
+            let data = await response.json();
+            document.getElementById("result").innerText = "Support Advice: " + data.support;
+        }
+    </script>
+</head>
+<body>
+    <h1>Symptom & Mental Health Checker</h1>
+    <input id="symptoms" placeholder="Enter symptoms" />
+    <button onclick="checkSymptom()">Check Symptoms</button>
+    <br><br>
+    <input id="issue" placeholder="Describe your feelings" />
+    <button onclick="checkMentalHealth()">Get Mental Health Support</button>
+    <p id="result"></p>
+</body>
+</html>
